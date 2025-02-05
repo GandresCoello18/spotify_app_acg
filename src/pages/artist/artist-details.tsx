@@ -1,44 +1,101 @@
-import { AlbumCard } from '@/components/album/AlbumCard';
+import { getArtistById } from '@/api/spotify.artist.api';
+import { AlbumCard, AlbumUpdateAction } from '@/components/album/AlbumCard';
 import { Pagination } from '@/components/Pagination';
-import { CheckCircleSvg } from '@/components/svg/check.circle.svg';
+import { useCallback, useEffect, useState } from 'react';
+import { toast } from 'react-toast';
+import useAuth from '@/hooks/useAuth';
+import { useNavigate, useParams } from 'react-router-dom';
+import { ArtistsModel } from '@/model/spotify.artist.model';
+import { ArtistDetail } from '@/components/artists/detail/ArtistDetail';
+import { ArtistSkeleton } from '@/components/artists/detail/ArtistDetailSkeleton';
+import { getAlbumsByArtist, getMeSavedAlbums } from '@/api/spotify.album.api';
+import { ItemResultAlbumModel } from '@/model/spotify.album.model';
+import { AlbumCardSkeleton } from '@/components/album/AlbumCardSkeleton';
+import { NoResults } from '@/components/NoResults';
+import { fetchActionAlbum } from '@/services/artist.service';
 
 const ArtistDetailsPage = () => {
-  const followers = 45000000;
-  const listeners = 23000000;
+  const navigate = useNavigate();
+  const { userToken } = useAuth();
+  const { artistId } = useParams<{ artistId: string }>();
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [pages, setPages] = useState<number>(1);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [artist, setArtist] = useState<ArtistsModel | null>(null);
+  const [albums, setAlbums] = useState<ItemResultAlbumModel[]>([]);
+
+  const fetchDetailsArtist = useCallback(async () => {
+    setLoading(true);
+
+    try {
+      const artist = await getArtistById({
+        token: userToken,
+        artistId: artistId as string,
+      });
+      setArtist(artist || null);
+    } catch (e) {
+      if (e instanceof Error) {
+        toast.error(e.message);
+        navigate('/search');
+      }
+    } finally {
+      setLoading(false);
+    }
+  }, [userToken, artistId, navigate]);
+
+  const fetchAlbumsByArtist = useCallback(async () => {
+    setLoading(true);
+    const limit = 8;
+    const offset = currentPage > 1 ? (currentPage - 1) * limit : 0;
+
+    try {
+      const { items, total } = await getAlbumsByArtist({
+        token: userToken,
+        artistId: artistId as string,
+        limit,
+        offset,
+      });
+
+      const ids = items.map((item) => item.id) || [];
+      const isSaved = await getMeSavedAlbums({ token: userToken, ids });
+      const updateAlbum = items.map((item) => ({
+        ...item,
+        isAdded: isSaved[items.indexOf(item)],
+      }));
+
+      setAlbums(updateAlbum || []);
+      setPages(total ? Math.round(total / limit) : 1);
+    } catch (e) {
+      if (e instanceof Error) {
+        toast.error(e.message);
+        navigate('/search');
+      }
+    } finally {
+      setLoading(false);
+    }
+  }, [userToken, artistId, currentPage, navigate]);
+
+  useEffect(() => {
+    fetchDetailsArtist();
+  }, [fetchDetailsArtist]);
+
+  useEffect(() => {
+    fetchAlbumsByArtist();
+  }, [fetchAlbumsByArtist]);
+
+  const handleUpdateAlbum = (paramsClick: AlbumUpdateAction) => {
+    fetchActionAlbum({ userToken, ...paramsClick });
+    fetchAlbumsByArtist();
+  };
 
   return (
     <div className="min-h-screen bg-primary px-4">
       <section className="p-6 flex w-full justify-center">
-        <div className="flex flex-col sm:flex-row items-start gap-6 max-w-4xl w-full">
-          <img
-            src="https://images.pexels.com/photos/1601505/pexels-photo-1601505.jpeg"
-            alt="Bad Bunny"
-            className="w-32 h-32 sm:w-40 sm:h-40 rounded-full object-cover"
-          />
-
-          <div className="text-white">
-            <div className="flex items-center gap-2 text-secondary text-lg">
-              <CheckCircleSvg />
-              <span className="text-white">Artista certificado</span>
-            </div>
-
-            <h1 className="text-3xl font-bold mt-2">Bad Bunny</h1>
-
-            <div className="mt-4">
-              <p className="text-gray-400 text-md mt-2">
-                <span className="font-bold">
-                  Followers: {followers.toLocaleString()}
-                </span>
-              </p>
-
-              <p className="text-gray-400 text-md">
-                <span className="font-bold">
-                  Oyentes mensuales: {listeners.toLocaleString()}
-                </span>
-              </p>
-            </div>
-          </div>
-        </div>
+        {loading ? (
+          <ArtistSkeleton />
+        ) : (
+          artist && <ArtistDetail artist={artist} />
+        )}
       </section>
 
       <section className="mt-5 p-2 w-full flex justify-center">
@@ -46,57 +103,42 @@ const ArtistDetailsPage = () => {
           <div className="mb-5">
             <span className="ml-3 text-gray-400">
               Guarda tus álbumes favoritos de{' '}
-              <span className="font-bold">Bad Bunny</span>
+              <span className="font-bold">{artist?.name}</span>
             </span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {[
-              {
-                id: '1',
-                name: 'Bad Bunny',
-                imagen:
-                  'https://images.pexels.com/photos/30496890/pexels-photo-30496890.jpeg?auto=compress&cs=tinysrgb&w=300&lazy=load',
-                follow: 10,
-              },
-              {
-                id: '2',
-                name: 'Bad Bunny',
-                imagen:
-                  'https://images.pexels.com/photos/30468566/pexels-photo-30468566/free-photo-of-alfombras-de-colores-vivos-secandose-en-un-tejado-marroqui.jpeg?auto=compress&cs=tinysrgb&w=300&lazy=load',
-                follow: 10,
-              },
-              {
-                id: '3',
-                name: 'Bad Bunny',
-                imagen:
-                  'https://images.pexels.com/photos/30337353/pexels-photo-30337353/free-photo-of-calles-de-niza.jpeg?auto=compress&cs=tinysrgb&w=300&lazy=load',
-                follow: 10,
-              },
-              {
-                id: '4',
-                name: 'Bad Bunny',
-                imagen:
-                  'https://images.pexels.com/photos/1601505/pexels-photo-1601505.jpeg?auto=compress&cs=tinysrgb&w=300&lazy=load',
-                follow: 10,
-              },
-            ].map((artist) => (
-              <AlbumCard
-                key={artist.id}
-                image={artist.imagen}
-                name={artist.name}
-                published="2023/02/14"
-              />
-            ))}
+            {loading
+              ? ['0', '1', '2', '3'].map((item) => (
+                  <AlbumCardSkeleton key={item} />
+                ))
+              : albums.map((album) => (
+                  <AlbumCard
+                    key={album.id}
+                    id={album.id}
+                    image={album.images[0].url}
+                    name={album.name}
+                    isAdded={album.isAdded}
+                    published={album.release_date}
+                    openUrlSpotify={album.external_urls.spotify}
+                    handleClick={(paramsClick) =>
+                      handleUpdateAlbum(paramsClick)
+                    }
+                  />
+                ))}
           </div>
 
-          <div className="my-5 p-2 flex justify-start">
-            <Pagination
-              currentPage={1}
-              totalPages={50}
-              onPageChange={(page) => console.log('page ', page)}
-            />
-          </div>
+          {!loading && !albums.length ? <NoResults /> : null}
+
+          {albums.length ? (
+            <div className="my-5 p-2 flex justify-start">
+              <Pagination
+                currentPage={currentPage}
+                totalPages={pages}
+                onPageChange={(page) => setCurrentPage(page)}
+              />
+            </div>
+          ) : null}
         </div>
       </section>
     </div>

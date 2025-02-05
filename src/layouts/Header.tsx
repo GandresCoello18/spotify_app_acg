@@ -12,7 +12,7 @@ const Header = () => {
   const handleRemoveToken = () => {
     removeCookie(COOKIE_NAME_SPOTIFY_TOKEN);
     navigate('/');
-  }
+  };
 
   return (
     <header className="bg-primary text-white p-4 flex justify-between items-center">

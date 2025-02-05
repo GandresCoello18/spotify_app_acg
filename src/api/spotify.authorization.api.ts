@@ -1,8 +1,9 @@
-import { TokenSpotify } from "@/model/spotify.model";
-import { URL_REDIRECT_CALLBACK_SPOTIFY } from "@/utils/url";
+import { TokenSpotify } from '@/model/spotify.authorization.model';
+import { URL_REDIRECT_CALLBACK_SPOTIFY } from '@/utils/url';
+import { BASE_URL_SPOTIFY_ACCOUNT } from './index.api';
 
-export const BASE_URL_SPOTIFY_AUTHORIZE = 'https://accounts.spotify.com/authorize?';
-export const BASE_URL_SPOTIFY = 'https://accounts.spotify.com/api/token';
+export const BASE_URL_SPOTIFY_AUTHORIZE = `${BASE_URL_SPOTIFY_ACCOUNT}/authorize?`;
+export const BASE_URL_SPOTIFY = `${BASE_URL_SPOTIFY_ACCOUNT}/api/token`;
 
 export const getAccessTokenSpotify = async (options: { code: string }) => {
   const { code } = options;
@@ -19,5 +20,5 @@ export const getAccessTokenSpotify = async (options: { code: string }) => {
     }),
   });
 
-  return await response.json() as TokenSpotify;
+  return (await response.json()) as TokenSpotify;
 };
