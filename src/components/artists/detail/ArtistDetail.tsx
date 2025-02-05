@@ -16,7 +16,7 @@ export const ArtistDetail = ({ artist }: PropsArtistDetail) => {
 
       <div className="text-white">
         <div className="flex items-center gap-2 text-secondary text-lg">
-          <CheckCircleSvg />
+          <CheckCircleSvg data-testid="certified-icon" />
           <span className="text-white">Artista certificado</span>
         </div>
 
