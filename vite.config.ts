@@ -9,9 +9,6 @@ export default defineConfig({
     react(),
     tailwindcss(),
     VitePWA({
-      devOptions: {
-        enabled: true,
-      },
       registerType: 'autoUpdate',
       includeAssets: ['vite.svg', 'robots.txt'],
       manifest: {
@@ -21,7 +18,18 @@ export default defineConfig({
         theme_color: '#ffffff',
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,png,svg}'],
+        globPatterns: ['**/*.{ts,tsx,js,css,html,png,svg}'],
+        runtimeCaching: [
+          {
+            urlPattern: /^https:\/\/api\.spotify\.com\//,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'spotify-api-cache',
+              expiration: { maxEntries: 50, maxAgeSeconds: 86400 },
+              networkTimeoutSeconds: 6,
+            },
+          },
+        ],
       },
     }),
   ],
