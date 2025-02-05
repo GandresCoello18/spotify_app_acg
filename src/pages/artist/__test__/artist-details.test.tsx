@@ -10,7 +10,7 @@ import ArtistDetailsPage from '../artist-details';
 vi.mock('@/api/spotify.artist.api');
 vi.mock('@/api/spotify.album.api');
 vi.mock('@/hooks/useAuth', () => ({
-    default: vi.fn(),
+  default: vi.fn(),
 }));
 
 const mockArtist = {
@@ -18,7 +18,7 @@ const mockArtist = {
   name: 'Test Artist',
   images: [{ url: 'https://example.com/artist.jpg' }],
   followers: { total: 1000 },
-  popularity: 500
+  popularity: 500,
 };
 
 const mockAlbums = {
@@ -37,8 +37,8 @@ const mockAlbums = {
 describe('ArtistDetailsPage', () => {
   beforeEach(() => {
     (useAuth as jest.Mock).mockReturnValue({
-        isAuthenticated: true,
-        userToken: 'mockToken',
+      isAuthenticated: true,
+      userToken: 'mockToken',
     });
     (getArtistById as jest.Mock).mockReturnValue(mockArtist);
     (getAlbumsByArtist as jest.Mock).mockReturnValue(mockAlbums);
@@ -49,17 +49,17 @@ describe('ArtistDetailsPage', () => {
     render(
       <MemoryRouter initialEntries={['/artist/123']}>
         <Routes>
-          <Route path='/artist/:artistId' element={<ArtistDetailsPage />} />
+          <Route path="/artist/:artistId" element={<ArtistDetailsPage />} />
         </Routes>
-      </MemoryRouter>
+      </MemoryRouter>,
     );
-    
+
     const skeletons = screen.getAllByRole('presentation');
     expect(skeletons.length).toBeGreaterThan(0);
     waitFor(() => {
-        setTimeout(() => {
-            expect(getArtistById).toHaveBeenCalled();
-        }, 1000);
+      setTimeout(() => {
+        expect(getArtistById).toHaveBeenCalled();
+      }, 1000);
     });
   });
 
@@ -67,17 +67,17 @@ describe('ArtistDetailsPage', () => {
     render(
       <MemoryRouter initialEntries={['/artist/123']}>
         <Routes>
-          <Route path='/artist/:artistId' element={<ArtistDetailsPage />} />
+          <Route path="/artist/:artistId" element={<ArtistDetailsPage />} />
         </Routes>
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     waitFor(() => {
-        setTimeout(() => {
-            const artists = screen.getAllByText('Test Artist');
-            expect(artists).toHaveLength(1);
-            // expect(screen.getByText('Test Artist')).toBeInTheDocument()
-        }, 1000);
+      setTimeout(() => {
+        const artists = screen.getAllByText('Test Artist');
+        expect(artists).toHaveLength(1);
+        // expect(screen.getByText('Test Artist')).toBeInTheDocument()
+      }, 1000);
     });
   });
 
@@ -85,31 +85,35 @@ describe('ArtistDetailsPage', () => {
     render(
       <MemoryRouter initialEntries={['/artist/123']}>
         <Routes>
-          <Route path='/artist/:artistId' element={<ArtistDetailsPage />} />
+          <Route path="/artist/:artistId" element={<ArtistDetailsPage />} />
         </Routes>
-      </MemoryRouter>
+      </MemoryRouter>,
     );
-    
-    await waitFor(() => expect(screen.getByText('Test Album')).toBeInTheDocument());
+
+    await waitFor(() =>
+      expect(screen.getByText('Test Album')).toBeInTheDocument(),
+    );
   });
 
   test('handles pagination', async () => {
     render(
       <MemoryRouter initialEntries={['/artist/123']}>
         <Routes>
-          <Route path='/artist/:artistId' element={<ArtistDetailsPage />} />
+          <Route path="/artist/:artistId" element={<ArtistDetailsPage />} />
         </Routes>
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     waitFor(() => {
-        setTimeout(() => {
-            expect(getAlbumsByArtist).toHaveBeenCalledTimes(2);
-            const nextPageButton = screen.getByRole('button', { name: /next/i });
-            userEvent.click(nextPageButton);
-        }, 1000);
+      setTimeout(() => {
+        expect(getAlbumsByArtist).toHaveBeenCalledTimes(2);
+        const nextPageButton = screen.getByRole('button', { name: /next/i });
+        userEvent.click(nextPageButton);
+      }, 1000);
     });
-    await waitFor(() => expect(screen.getByText('Test Album')).toBeInTheDocument());
+    await waitFor(() =>
+      expect(screen.getByText('Test Album')).toBeInTheDocument(),
+    );
   });
 
   test('shows no results message when no albums are found', async () => {
@@ -117,11 +121,15 @@ describe('ArtistDetailsPage', () => {
     render(
       <MemoryRouter initialEntries={['/artist/123']}>
         <Routes>
-          <Route path='/artist/:artistId' element={<ArtistDetailsPage />} />
+          <Route path="/artist/:artistId" element={<ArtistDetailsPage />} />
         </Routes>
-      </MemoryRouter>
+      </MemoryRouter>,
     );
-    
-    await waitFor(() => expect(screen.getByText('No se encontraron resultados')).toBeInTheDocument());
+
+    await waitFor(() =>
+      expect(
+        screen.getByText('No se encontraron resultados'),
+      ).toBeInTheDocument(),
+    );
   });
 });

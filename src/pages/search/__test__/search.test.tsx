@@ -1,4 +1,10 @@
-import { render, screen, fireEvent, waitFor, act  } from '@testing-library/react';
+import {
+  render,
+  screen,
+  fireEvent,
+  waitFor,
+  act,
+} from '@testing-library/react';
 import { getSearchAlbum } from '@/api/spotify.search.api';
 import useAuth from '@/hooks/useAuth';
 import { MemoryRouter } from 'react-router-dom';
@@ -14,51 +20,53 @@ vi.mock('@/api/spotify.album.api', () => ({
 }));
 
 vi.mock('@/hooks/useAuth', () => ({
-    default: vi.fn(),
+  default: vi.fn(),
 }));
 
 describe('SearchPage', () => {
   it('renders the search page correctly', () => {
     (useAuth as jest.Mock).mockReturnValue({
-        isAuthenticated: true,
-        userToken: 'fake-token',
+      isAuthenticated: true,
+      userToken: 'fake-token',
     });
 
     render(
       <MemoryRouter>
         <SearchPage />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
-    expect(screen.getByPlaceholderText('Buscar canciones, artistas...')).toBeInTheDocument();
+    expect(
+      screen.getByPlaceholderText('Buscar canciones, artistas...'),
+    ).toBeInTheDocument();
   });
 
   it('calls API and displays results', async () => {
     (getSearchAlbum as jest.Mock).mockResolvedValue({
-        albums: {
-          items: [
-            {
-              id: '123',
-              name: 'Fake Album',
-              images: [{ url: 'fake-image.jpg' }],
-              artists: [{ id: '456', name: 'Fake Artist' }],
-              release_date: '2024-01-01',
-            },
-          ],
-          total: 1,
-        },
+      albums: {
+        items: [
+          {
+            id: '123',
+            name: 'Fake Album',
+            images: [{ url: 'fake-image.jpg' }],
+            artists: [{ id: '456', name: 'Fake Artist' }],
+            release_date: '2024-01-01',
+          },
+        ],
+        total: 1,
+      },
     });
 
     render(
       <MemoryRouter>
         <SearchPage />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     waitFor(() => expect(getSearchAlbum).toHaveBeenCalled()).then(async () => {
-        setTimeout(async () => {
-            const albumCard = await screen.findByText('Fake Album');
-            expect(albumCard).toBeInTheDocument();
-        }, 1000);
+      setTimeout(async () => {
+        const albumCard = await screen.findByText('Fake Album');
+        expect(albumCard).toBeInTheDocument();
+      }, 1000);
     });
   });
 
@@ -66,13 +74,15 @@ describe('SearchPage', () => {
     render(
       <MemoryRouter>
         <SearchPage />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     const input = screen.getByPlaceholderText('Buscar canciones, artistas...');
     fireEvent.change(input, { target: { value: 'New Search' } });
 
     await act(() => new Promise((res) => setTimeout(res, 1000)));
-    expect(getSearchAlbum).toHaveBeenCalledWith(expect.objectContaining({ artist: 'New Search' }));
+    expect(getSearchAlbum).toHaveBeenCalledWith(
+      expect.objectContaining({ artist: 'New Search' }),
+    );
   });
 });

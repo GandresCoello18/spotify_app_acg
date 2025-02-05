@@ -9,15 +9,17 @@ describe('LoginPage', () => {
 
   test('Renderiza el título y la descripción correctamente', () => {
     render(<LoginPage />);
-    
+
     expect(screen.getByText(/Disfruta de la/i)).toBeInTheDocument();
     expect(screen.getByText(/mejor música/i)).toBeInTheDocument();
-    expect(screen.getByText(/Accede a tu cuenta para guardar/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Accede a tu cuenta para guardar/i),
+    ).toBeInTheDocument();
   });
 
   test('El botón de login con Spotify existe y tiene el texto correcto', () => {
     render(<LoginPage />);
-    
+
     const button = screen.getByRole('button', { name: /Log in con Spotify/i });
     expect(button).toBeInTheDocument();
   });

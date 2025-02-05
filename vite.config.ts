@@ -1,5 +1,6 @@
 import { defineConfig } from 'vitest/config';
 import path from 'path';
+import { VitePWA } from 'vite-plugin-pwa';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 
@@ -7,6 +8,22 @@ export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
+    VitePWA({
+      devOptions: {
+        enabled: true,
+      },
+      registerType: 'autoUpdate',
+      includeAssets: ['vite.svg', 'robots.txt'],
+      manifest: {
+        name: 'Spotify App',
+        short_name: 'Spotify App',
+        description: 'Aplicación React con Vite en modo offline',
+        theme_color: '#ffffff',
+      },
+      workbox: {
+        globPatterns: ['**/*.{js,css,html,png,svg}'],
+      },
+    }),
   ],
   test: {
     globals: true,

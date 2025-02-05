@@ -65,11 +65,13 @@ describe('MyAlbumsPage', () => {
 
     render(<MyAlbumsPage />);
 
-    waitFor(() => expect(screen.getByText('Fake Album 1')).toBeInTheDocument()).then(() => {
-        setTimeout(() => {
-            expect(screen.getByText('Fake Album 2')).toBeInTheDocument();
-            expect(screen.getAllByRole('img').length).toBe(2);
-        }, 1000);
+    waitFor(() =>
+      expect(screen.getByText('Fake Album 1')).toBeInTheDocument(),
+    ).then(() => {
+      setTimeout(() => {
+        expect(screen.getByText('Fake Album 2')).toBeInTheDocument();
+        expect(screen.getAllByRole('img').length).toBe(2);
+      }, 1000);
     });
   });
 
@@ -93,10 +95,14 @@ describe('MyAlbumsPage', () => {
 
     render(<MyAlbumsPage />);
 
-    waitFor(() => expect(screen.getByText('Fake Album 1')).toBeInTheDocument()).then(() => {
-        setTimeout(() => {
-            expect(screen.getByRole('button', { name: /next/i })).toBeInTheDocument();
-        }, 1000);
+    waitFor(() =>
+      expect(screen.getByText('Fake Album 1')).toBeInTheDocument(),
+    ).then(() => {
+      setTimeout(() => {
+        expect(
+          screen.getByRole('button', { name: /next/i }),
+        ).toBeInTheDocument();
+      }, 1000);
     });
   });
 
@@ -120,19 +126,25 @@ describe('MyAlbumsPage', () => {
 
     render(<MyAlbumsPage />);
 
-    waitFor(() => expect(screen.getByText('Fake Album 1')).toBeInTheDocument()).then(() => {
-        setTimeout(() => {
-            fireEvent.click(screen.getByRole('button', { name: /actualizar/i }));
-            expect(fetchActionAlbum).toHaveBeenCalledTimes(1);
-        }, 1000);
+    waitFor(() =>
+      expect(screen.getByText('Fake Album 1')).toBeInTheDocument(),
+    ).then(() => {
+      setTimeout(() => {
+        fireEvent.click(screen.getByRole('button', { name: /actualizar/i }));
+        expect(fetchActionAlbum).toHaveBeenCalledTimes(1);
+      }, 1000);
     });
   });
 
   it('should show an error toast if getMeAlbums fails', async () => {
-    (getMeAlbums as jest.Mock).mockRejectedValue(new Error('Error loading albums'));
+    (getMeAlbums as jest.Mock).mockRejectedValue(
+      new Error('Error loading albums'),
+    );
 
     render(<MyAlbumsPage />);
 
-    await waitFor(() => expect(toast.error).toHaveBeenCalledWith('Error loading albums'));
+    await waitFor(() =>
+      expect(toast.error).toHaveBeenCalledWith('Error loading albums'),
+    );
   });
 });
