@@ -18,7 +18,7 @@ const SpotifyCallbackPage = () => {
   const fetchAccessToken = async (code: string) => {
     const data = await getAccessTokenSpotify({ code });
 
-    if (!data?.access_token) return navigate('/search');
+    if (!data?.access_token) return navigate('/404');
 
     const expirationTime = Date.now() + data.expires_in * 1000; // 1 hora de vida
     setCookie(COOKIE_NAME_SPOTIFY_TOKEN_EXPIRATION, expirationTime.toString(), {

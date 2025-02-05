@@ -52,7 +52,7 @@ const SearchPage = () => {
     } catch (e) {
       if (e instanceof Error) {
         toast.error(e.message);
-        navigate('/');
+        navigate('/404');
       }
     } finally {
       setLoading(false);

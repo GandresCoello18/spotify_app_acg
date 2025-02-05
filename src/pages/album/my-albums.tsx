@@ -33,7 +33,7 @@ const MyAlbumsPage = () => {
     } catch (e) {
       if (e instanceof Error) {
         toast.error(e.message);
-        navigate('/search');
+        navigate('/404');
       }
     } finally {
       setLoading(false);

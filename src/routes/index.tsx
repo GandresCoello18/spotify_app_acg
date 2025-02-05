@@ -24,6 +24,7 @@ const AppRoutes = () => {
           </Route>
           <Route path="/callback" element={<SpotifyCallbackPage />} />
           <Route path="*" element={<NotFound />} />
+          <Route path="/404" element={<NotFound />} />
         </Routes>
       </MainLayout>
     </Router>
