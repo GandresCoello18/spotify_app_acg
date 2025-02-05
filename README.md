@@ -1,50 +1,89 @@
-# React + TypeScript + Vite
+# Spotify App
+App de react usando la api de app musical Spotify para obtener: artistas, busquedas, albumes, mi perfil, acciones como añadir o eliminar albumes.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## React + TypeScript + Vite
 
-Currently, two official plugins are available:
+## Installation
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Install project with yarn
 
-## Expanding the ESLint configuration
+```bash
+yarn install
+````
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Development
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```
+yarn dev
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Lint
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
 ```
+yarn lint
+```
+
+## Prettier
+
+```
+yarn format
+```
+
+## Testing
+
+Unit testing component
+```
+yarn test
+```
+
+## Comenzando 🚀
+
+_Estas instrucciones te permitirán obtener una copia del proyecto en funcionamiento en tu máquina local para propósitos de desarrollo y pruebas._
+
+Mira **Deployment** para conocer como desplegar el proyecto.
+
+### Pre-requisitos 📋
+
+_Que cosas necesitas para instalar el software y como instalarlas_
+
+_Tener instalado Node Js en tu ordenador, puedes obtener desde el sitio oficial para diferentes SOS._
+
+- [Nvm](https://www.freecodecamp.org/news/node-version-manager-nvm-install-guide/) - Manejo de version para node
+- [Node](https://nodejs.org/es/) - Entorno de ejecución javascript (version recomendada: 20.18.0)
+
+## Entorno de pruebas 🧪
+
+_Ambiente donde se ejecutan las aplicaciones de prueba o también conocido como Stagin_
+
+- [Vercel](https://vercel.com) - Deploy
+- [App Production](https://menuiz-api.onrender.com/) - Production
+
+## Construido con 🛠️
+
+_Para el desarrollo de esta api rest se utilizo las siguientes herramientas._
+
+- [Spotify developer](https://developer.spotify.com/) - Spotify for developer / documentación / registro de app.
+- [React](https://es.react.dev/) - Libreria de componentes UI
+- [Oauth2](https://auth0.com/es/intro-to-iam/what-is-oauth-2) - Inicio de sesión con cuenta de spotify
+- [TypeScript](https://www.typescriptlang.org/) - Tipado fuerte para javascript.
+- [Tailwind Css](https://tailwindcss.com/)/) - Libreria para estilos
+- [Jest](http://jestjs.io/) - Unit Testing
+
+## Autores ✒️
+
+- **Andrés Coello** - _Developer full stack_ - [Andres Coello](https://www.instagram.com/coellogoyes/)
+
+#### 🔗 Links
+[![portfolio](https://img.shields.io/badge/my_portfolio-000?style=for-the-badge&logo=ko-fi&logoColor=white)](https://andres-coello-goyes.vercel.app/)
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/andr%C3%A9s-roberto-coello-goyes/)
+[![twitter](https://img.shields.io/badge/twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://x.com/AndresC79085858)
+
+## Expresiones de Gratitud 🎁
+
+- Pasate por mi perfil para ver algun otro proyecto 📢
+- Desarrollemos alguna app juntos, puedes escribirme en mis redes.
+- Muchas gracias por pasarte por este proyecto 🤓.
+
+---
+
+⌨️ con ❤️ por [Andres Coello](https://www.instagram.com/coellogoyes/) 😊
