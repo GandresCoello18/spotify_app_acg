@@ -25,7 +25,10 @@ export const AlbumCard = ({
 }: AlbumCardProps) => {
   return (
     <div className="p-4 transition-colors duration-300 bg-primary rounded-lg hover:bg-secondary cursor-pointer text-white hover:text-black max-w-xs">
-      <a href={hrefUrl || openUrlSpotify || '#'} target={openUrlSpotify ? '_blank' : ''}>
+      <a
+        href={hrefUrl || openUrlSpotify || '#'}
+        target={openUrlSpotify ? '_blank' : ''}
+      >
         <img
           src={image}
           alt={name}

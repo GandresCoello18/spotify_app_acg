@@ -4,7 +4,7 @@ import { AlbumCardSkeleton } from '@/components/album/AlbumCardSkeleton';
 import { Pagination } from '@/components/Pagination';
 import useAuth from '@/hooks/useAuth';
 import { MeItemAlbumModel } from '@/model/spotify.me.album.model';
-import { fetchActionAlbum } from '@/services/artist.service';
+import { fetchActionAlbum } from '@/services/artist/artist.service';
 import { useState, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toast';

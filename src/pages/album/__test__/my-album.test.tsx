@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { getMeAlbums } from '@/api/spotify.album.api';
-import { fetchActionAlbum } from '@/services/artist.service';
+import { fetchActionAlbum } from '@/services/artist/artist.service';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toast';
 import MyAlbumsPage from '../my-albums';

@@ -76,7 +76,6 @@ describe('ArtistDetailsPage', () => {
       setTimeout(() => {
         const artists = screen.getAllByText('Test Artist');
         expect(artists).toHaveLength(1);
-        // expect(screen.getByText('Test Artist')).toBeInTheDocument()
       }, 1000);
     });
   });

@@ -7,11 +7,9 @@ App de react usando la api de app musical Spotify para obtener: artistas, busque
 
 Install project with yarn
 
-```bash
+```
 yarn install
 ````
-
-## Development
 
 ```
 yarn dev
@@ -22,19 +20,22 @@ yarn dev
 ```
 yarn lint
 ```
+Analiza posibles errores de practicas y reglas de código
 
 ## Prettier
 
 ```
 yarn format
 ```
+Dar formato al código para que sea mas legible a simple vista
 
 ## Testing
 
-Unit testing component
+Unit testing component and functions
 ```
 yarn test
 ```
+Se ejecutan todos los archivos de test que se encuentren dentro de la capeta /__test__
 
 ## Comenzando 🚀
 
@@ -51,22 +52,20 @@ _Tener instalado Node Js en tu ordenador, puedes obtener desde el sitio oficial 
 - [Nvm](https://www.freecodecamp.org/news/node-version-manager-nvm-install-guide/) - Manejo de version para node
 - [Node](https://nodejs.org/es/) - Entorno de ejecución javascript (version recomendada: 20.18.0)
 
-## Entorno de pruebas 🧪
-
-_Ambiente donde se ejecutan las aplicaciones de prueba o también conocido como Stagin_
+## Ambientes 🧪
 
 - [Vercel](https://vercel.com) - Deploy
-- [App Production](https://menuiz-api.onrender.com/) - Production
+- [App Production](https://andres-coello-full-stack.vercel.app) - Production
 
 ## Construido con 🛠️
 
-_Para el desarrollo de esta api rest se utilizo las siguientes herramientas._
+_Para el desarrollo de esta app se utilizo las siguientes herramientas._
 
 - [Spotify developer](https://developer.spotify.com/) - Spotify for developer / documentación / registro de app.
-- [React](https://es.react.dev/) - Libreria de componentes UI
-- [Oauth2](https://auth0.com/es/intro-to-iam/what-is-oauth-2) - Inicio de sesión con cuenta de spotify
+- [React](https://es.react.dev/) - Librería de componentes UI
+- [Oauth2](https://auth0.com/es/intro-to-iam/what-is-oauth-2) - Inicio de sesión con cuenta de Spotify
 - [TypeScript](https://www.typescriptlang.org/) - Tipado fuerte para javascript.
-- [Tailwind Css](https://tailwindcss.com/)/) - Libreria para estilos
+- [Tailwind Css](https://tailwindcss.com/) - Librería para estilos
 - [Jest](http://jestjs.io/) - Unit Testing
 
 ## Autores ✒️

@@ -9,7 +9,7 @@ import { ItemResultAlbumModel } from '@/model/spotify.album.model';
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { NoResults } from '@/components/NoResults';
-import { fetchActionAlbum } from '@/services/artist.service';
+import { fetchActionAlbum } from '@/services/artist/artist.service';
 import { getMeSavedAlbums } from '@/api/spotify.album.api';
 
 const SearchPage = () => {

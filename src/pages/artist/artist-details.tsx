@@ -12,7 +12,7 @@ import { getAlbumsByArtist, getMeSavedAlbums } from '@/api/spotify.album.api';
 import { ItemResultAlbumModel } from '@/model/spotify.album.model';
 import { AlbumCardSkeleton } from '@/components/album/AlbumCardSkeleton';
 import { NoResults } from '@/components/NoResults';
-import { fetchActionAlbum } from '@/services/artist.service';
+import { fetchActionAlbum } from '@/services/artist/artist.service';
 
 const ArtistDetailsPage = () => {
   const navigate = useNavigate();
