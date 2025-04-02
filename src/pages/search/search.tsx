@@ -48,7 +48,7 @@ const SearchPage = () => {
 
       setAlbums(updateAlbum || []);
       setTotalResults(albums?.total || 0);
-      setPages(albums?.total ? Math.round(albums.total / limit) : 1);
+      setPages(albums?.total ? Math.ceil(albums.total / limit) : 1);
     } catch (e) {
       if (e instanceof Error) {
         toast.error(e.message);
@@ -65,7 +65,18 @@ const SearchPage = () => {
 
   const handleUpdateAlbum = (paramsClick: AlbumUpdateAction) => {
     fetchActionAlbum({ userToken, ...paramsClick });
-    fetchResultSearch();
+    
+    const updateAlbums = albums.map(album => {
+      if (paramsClick.albumId === album.id) {
+        return {
+          ...album,
+          isAdded: !paramsClick.isAdded
+        }
+      }
+      return album;
+    });
+
+    setAlbums(updateAlbums);
   };
 
   return (

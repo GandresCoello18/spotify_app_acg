@@ -29,7 +29,7 @@ const MyAlbumsPage = () => {
         offset,
       });
       setAlbums(items || []);
-      setPages(total ? Math.round(total / limit) : 1);
+      setPages(total ? Math.ceil(total / limit) : 1);
     } catch (e) {
       if (e instanceof Error) {
         toast.error(e.message);
